@@ -1,7 +1,13 @@
 const Colors = {
-  primaryGreen: "#2cb464",
-  primaryDarkGreen: "#30bc6f",
-  white: "#ffffff"
+  primaryColor: "#332c4a",
+  secondaryColor: "#29243c",
+  white: "#ffffff",
+  black: "#000000",
+  buttonColor: "#fc4a90"
 };
 
-export { Colors };
+const Fonts = {
+  Courier: "Courier"
+};
+
+export { Colors, Fonts };

@@ -8,6 +8,23 @@ const config = {
   storageBucket: "ride-5ac9c.appspot.com",
   messagingSenderId: "996313310360"
 };
+
 let app = Firebase.initializeApp(config);
 
-export const db = app.database();
+const FireBaseManager = {
+  createRide: (userId, from, to, seats, name, contact, date) => {
+    return Firebase.database()
+      .ref("/rides" + userId)
+      .set({
+        from,
+        to,
+        seats,
+        name,
+        contact,
+        date
+      });
+  }
+};
+const db = app.database();
+
+export { db, FireBaseManager };

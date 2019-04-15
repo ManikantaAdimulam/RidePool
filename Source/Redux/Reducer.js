@@ -1,30 +1,19 @@
-import { GET_USER, GET_USER_REPOS } from "./ActionCreators";
+import { GET_USER } from "./ActionCreators";
 
 const initialState = {
-  name: "",
-  avatarUrl: "",
-  repos: [],
-  isSuccess: true
+  email: "",
+  refreshToken: "",
+  uid: ""
 };
 
-export function reducer(state = initialState, action) {
+export function LoginReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
       return {
         ...state,
-        name: action.data.data.name,
-        avatarUrl: action.data.data.avatar_url,
-        message: action.data.data.message !== undefined ? false : true
-      };
-    case GET_USER_REPOS:
-      return {
-        ...state,
-        repos: action.data.data.map(repo => {
-          return {
-            name: repo.name,
-            description: repo.description
-          };
-        })
+        email: action.data.user.email,
+        refreshToken: action.data.user.refreshToken,
+        uid: action.data.user.uid
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 import React from "react";
 import { combineReducers } from "redux";
-import { reducer } from "./Reducer";
+import { LoginReducer } from "./Reducer";
 
 export const rootReducer = () => {
-  return combineReducers({ reducer });
+  return combineReducers({ LoginReducer });
 };
