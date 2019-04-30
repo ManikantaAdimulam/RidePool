@@ -12,19 +12,29 @@ const config = {
 let app = Firebase.initializeApp(config);
 
 const FireBaseManager = {
-  createRide: (userId, from, to, seats, name, contact, date) => {
-    return Firebase.database()
-      .ref("/rides" + userId)
-      .set({
-        from,
-        to,
-        seats,
-        name,
-        contact,
-        date
-      });
+  createRide: (userId, from, to, seats, name, contact, date, time) => {
+    return db.ref("rides/").push({
+      from,
+      to,
+      seats,
+      name,
+      contact,
+      date,
+      time,
+      userId
+    });
+  },
+  getFromDB: (userId, rides) => {
+    return db.ref("rides/").on("value", snapshot => {
+      var mobile = "";
+      if (snapshot.val()) {
+        mobile = snapshot.val();
+      }
+      rides(mobile);
+    });
   }
 };
+
 const db = app.database();
 
 export { db, FireBaseManager };

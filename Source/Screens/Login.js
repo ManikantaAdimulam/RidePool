@@ -7,16 +7,14 @@ import {
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
-  Image,
-  InteractionManager
+  Image
 } from "react-native";
 import { Colors, Fonts } from "../Utilities/Constants";
-import { db } from "../Utilities/FireBase";
 import FireBase from "firebase";
 import { Actions } from "react-native-router-flux";
 import Loader from "../Components/Loader";
 import { connect } from "react-redux";
-import { getUserData } from "../Redux/ActionCreators";
+import { setUserData } from "../Redux/ActionCreators";
 
 const Login = ({ setData }) => {
   const [isSignUp, setSignUp] = useState(false);
@@ -24,29 +22,25 @@ const Login = ({ setData }) => {
   const [password, setPassword] = useState("manikanta");
   const [showLoader, setShowLoader] = useState(false);
 
-  const addUser = async () => {
+  const addUser = () => {
     setShowLoader(true);
     if (isSignUp) {
-      await FireBase.auth()
+      FireBase.auth()
         .createUserWithEmailAndPassword(userName, password)
         .then(result => {
-          console.log(setData);
           setData(result);
           setShowLoader(false);
         })
         .catch(error => {
-          console.log(error, "ERROR");
+          console.error(error, "ERROR");
         });
     } else {
-      await FireBase.auth()
+      FireBase.auth()
         .signInWithEmailAndPassword(userName, password)
         .then(result => {
-          console.log(setData);
           setData(result);
           setShowLoader(false);
-          if (result.operationType == "signIn") {
-            Actions.reset("second");
-          }
+          Actions.reset("second");
         })
         .catch(error => {
           console.log(error, "ERROR");
@@ -165,7 +159,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setData: result => dispatch(getUserData(result))
+  setData: result => dispatch(setUserData(result))
 });
 export default connect(
   mapStateToProps,

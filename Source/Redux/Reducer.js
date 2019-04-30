@@ -1,4 +1,4 @@
-import { GET_USER } from "./ActionCreators";
+import { SET_USER } from "./ActionCreators";
 
 const initialState = {
   email: "",
@@ -8,7 +8,7 @@ const initialState = {
 
 export function LoginReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_USER:
+    case SET_USER:
       return {
         ...state,
         email: action.data.user.email,

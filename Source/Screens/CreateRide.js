@@ -1,16 +1,16 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
   StyleSheet,
   Dimensions,
-  FlatList,
   TouchableOpacity
 } from "react-native";
 import { Colors, Fonts } from "../Utilities/Constants";
 import FloatingLabelInput from "../Components/FloatingLabelInput";
 import { FireBaseManager } from "../Utilities/FireBase";
 import { connect } from "react-redux";
+import Loader from "../Components/Loader";
 
 const CreateRide = ({ uid }) => {
   const [from, setFrom] = useState("");
@@ -19,13 +19,27 @@ const CreateRide = ({ uid }) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [date, setDate] = useState("");
-  const insertIntoDB = () => {
-    FireBaseManager.createRide(uid, from, to, seats, name, contact, date);
+  const [time, setTime] = useState("");
+  const [showLoader, setShowLoader] = useState(false);
+  const insertIntoDB = async () => {
+    setShowLoader(true);
+    await FireBaseManager.createRide(
+      uid,
+      from,
+      to,
+      seats,
+      name,
+      contact,
+      date,
+      time
+    );
+    setShowLoader(false);
   };
   return (
     <View style={styles.container}>
+      {showLoader && <Loader visible={showLoader} />}
       <Text style={styles.title}>Create Pool Ride</Text>
-      <View style={{ width: width * 0.9, marginTop: 25 }}>
+      <View style={styles.regView}>
         <FloatingLabelInput
           label={"From"}
           onChangeText={text => {
@@ -60,6 +74,12 @@ const CreateRide = ({ uid }) => {
           label={"Date"}
           onChangeText={text => {
             setDate(text);
+          }}
+        />
+        <FloatingLabelInput
+          label={"Time"}
+          onChangeText={text => {
+            setTime(text);
           }}
         />
       </View>
@@ -110,5 +130,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: Colors.white,
     fontWeight: "bold"
+  },
+  regView: {
+    width: width * 0.9,
+    marginTop: 25
   }
 });

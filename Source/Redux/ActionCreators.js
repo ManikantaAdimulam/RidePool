@@ -1,13 +1,19 @@
-const GET_USER = "GET_USER";
+const SET_USER = "GET_USER";
 
-const GET_DATA = "GET_DATA";
-const GET_DATA_FAILURE = "GET_DATA_FAILURE";
+const GET_RIDES = "GET_RIDES";
 
-const getUserData = data => {
+const setUserData = data => {
   return {
-    type: GET_USER,
+    type: SET_USER,
     data
   };
 };
 
-export { GET_DATA, GET_DATA_FAILURE, GET_USER, getUserData };
+const getRides = data => {
+  return {
+    type: GET_RIDES,
+    data
+  };
+};
+
+export { SET_USER, GET_RIDES, setUserData, getRides };
